@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{  message }}
+    </div>
+
+    <hr>
+
+    <div id="app-2">
+        <span v-bind:title="message">
+            Test
+        </span>
+    </div>
+
+    <hr>
+
+    <div id="app-3">
+        <span v-if="seen">
+            Now you see me
+        </span>
+    </div>
+
+    <hr>
+
+    <div id="app-4">
+        <ol>
+            <li v-for="item in list">
+                {{ item.text }}
+            </li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <div id="app-5">
+        <p>{{  message }}</p>
+        <button v-on:click="reverseMessage">Reverse Message</button>
+    </div>
+
+    <hr>
+
+    <div id="app-6">
+        <p>{{  message }}</p>
+        <input v-model="message">
+    </div>
+
+    <hr>
+
+    <div id="app-7">
+        <ol>
+            <todo-item
+                v-for="item in list"
+                v-bind:todo="item"
+                v-bind:key="item.id"
+            ></todo-item>
+        </ol>
+    </div>
+
+    <hr>
+
+    <div id="app-8">
+        <p>{{ foo }}</p>
+        <button v-on:click="foo = 'baz'">Change it!</button>
+    </div>
+
+    <hr>
+
+    <div id="app-9"></div>
+
+    <hr>
+
+    <div id="app-10">
+        <p>Message: {{  msg }}</p>
+
+        <hr>
+
+        <p v-once>Once Message: {{ msg }}</p>
+
+        <hr>
+
+        <p>{{ rawHtml }}</p>
+
+        <hr>
+
+        <p v-html="rawHtml"></p>
+
+        <hr>
+
+        <div v-bind:id="dynamicId"></div>
+
+        <hr>
+
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+
+        <hr>
+
+        <p>{{ number }} + 1 = {{ number + 1 }}</p>
+
+        <hr>
+
+        <p>{{ ok ? 'YES' : 'NO' }}</p>
+
+        <hr>
+
+        <p>{{  msg.split('').reverse().join('') }}</p>
+    </div>
+
+    <hr>
+
+    <div id="app-11">
+        <p>
+            <a v-bind:href="url" target="_blank">Go to Google</a>
+            <a :href="url" target="_blank">Go to Google</a>
+        </p>
+
+        <hr>
+
+        <a v-on:click="doSomething">Show Google URL</a>
+
+        <hr>
+
+        <a @click="doSomething">Show Google URL</a>
+    </div>
+
+    <hr>
+
+    <div id="app-12">
+        <p>Original message: "{{ message }}"</p>
+
+        <hr>
+
+        <p>Computed reversed message: "{{ reversedMessage }}"</p>
+
+        <hr>
+
+        <p>Computed reversed message: "{{ reverseMessage() }}"</p>
+
+        <hr>
+        <!-- リアクティブな依存関係が更新された時だけ更新される(今回のケースだと更新されない) -->
+        <p>{{ computedNow }}</p>
+
+        <hr>
+        <!-- 再描画が起きると常に更新される -->
+        <p>{{ methodsNow() }}</p>
+    </div>
+
+    <hr>
+
+    <div id="app-13">
+        <p>{{ fullName }}</p>
+    </div>
+
+    <hr>
+
+    <div id="app-14">
+        <p>
+            Ask a yes/no question:
+            <input v-model="question">
+        </p>
+        <p>{{ answer }}</p>
+    </div>
+
+    <hr>
+
+    <div id="app-15">
+        <div
+            class="static"
+            :class="{ center: isCenter, 'text-danger': hasError }">
+            <p>Message</p>
+        </div>
+
+        <hr>
+
+        <div
+            class="static"
+            :class="classObject">
+            <p>Message</p>
+        </div>
+
+        <hr>
+
+        <div
+            class="static"
+            :class="computedClassObject">
+            <p>Message</p>
+        </div>
+
+        <hr>
+
+        <div
+            :class="[classObject, 'static']">
+            <p>Message</p>
+        </div>
+
+        <hr>
+
+        <div
+            :class="[{ center: isCenter }, { 'text-danger': hasError }, 'static']">
+            <p>Message</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="app-16">
+        <!-- class="foo bar baz boo" になる -->
+        <my-component class="baz boo"></my-component>
+
+        <hr>
+
+        <!-- class="foo bar active" になる -->
+        <my-component :class="{ active: isActive }"></my-component>
+    </div>
+
+    <hr>
+
+    <div id="app-17">
+        <div :style="{ color: activeColor, fontSize: fontSize + 'px' }">
+            <p>Text</p>
+        </div>
+
+        <hr>
+
+        <div :style="styleObject">
+            <p>Text</p>
+        </div>
+
+        <hr>
+
+        <div :style="[styleObject, styleObject2]">
+            <p>Text</p>
+        </div>
+
+        <hr>
+
+        <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">
+            <p>Text</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="app-18">
+        <!-- <template>要素は含まれない -->
+        <template v-if="ok">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template>
+        <template v-else>
+            <p>None</p>
+        </template>
+    </div>
+
+    <hr>
+
+    <div id="app-19">
+        <div>
+            <template v-if="loginType === 'username'">
+                <label>Username</label>
+                <input type="text" placeholder="Enter your username">
+            </template>
+            <template v-else>
+                <label>Email</label>
+                <input type="text" placeholder="Enter your email address">
+            </template>
+        </div>
+
+        <hr>
+
+        <div>
+            <template v-if="loginType === 'username'">
+                <label>Username</label>
+                <input type="text" placeholder="Enter your username" key="username-input">
+            </template>
+            <template v-else>
+                <label>Email</label>
+                <input type="text" placeholder="Enter your email address" key="email-input">
+            </template>
+        </div>
+        <div>
+            <button @click="toggleLoginType">Toggle login type</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="app-20">
+        <!-- ok が false の場合はコメントになる -->
+        <h1 v-if="ok">Hello!</h1>
+        <!-- ok が false の場合は style="display: none;" になる -->
+        <h1 v-show="ok">Hello!</h1>
+    </div>
+
+    <hr>
+
+    <div id="app-21">
+        <ul>
+            <li
+                v-for="(item, index) in items"
+                :key="item.id">
+                {{ parentMessage }} - {{ index }} - {{ item.message }}
+            </li>
+        </ul>
+
+        <hr>
+
+        <ul>
+            <li
+                v-for="(value, key, index) in object"
+                :key="key">
+                {{ index }} : {{ key }} : {{ value }}
+            </li>
+        </ul>
+
+        <hr>
+
+        <ul>
+            <li v-for="n in evenNumbers">
+                {{ n }}
+            </li>
+        </ul>
+
+        <hr>
+
+        <ul v-for="set in sets">
+            <li v-for="n in even(set)">
+                {{ n }}
+            </li>
+        </ul>
+
+        <hr>
+
+        <span v-for="n in 10">{{ n }}</span>
+
+        <hr>
+
+        <ul>
+            <template v-for="item in items">
+                <li>{{ item.message }}</li>
+                <li>...</li>
+            </template>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div id="app-22">
+        <form @submit.prevent="addNewTodo">
+            <label for="new-todo">Add a todo</label>
+            <input
+                v-model="newTodoText"
+                id="new-todo"
+                placeholder="E.g. Feed the cat"
+            >
+            <button>Add</button>
+        </form>
+        <ul>
+            <li
+                is="todo-item"
+                v-for="(todo, index) in todos"
+                :key="todo.id"
+                :id="todo.id"
+                :title="todo.title"
+                @remove="todos.splice(index, 1)"
+            >
+            </li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div id="app-23">
+        <button @click="counter += 1">Add+1</button>
+        <span>Now Counter: {{ counter }}</span>
+
+        <hr>
+
+        <button @click="greet">Greet</button>
+
+        <hr>
+
+        <button @click="say('hi')">Say hi</button>
+        <button @click="say('what')">Say what</button>
+
+        <hr>
+
+        <button @click="warn('Form cannot be submitted yet.', $event)">Submit</button>
+
+        <hr>
+
+        <a @click.stop="doStop" href="https://google.com">https://google.com</a>
+
+        <hr>
+
+        <a @click.stop.prevent="doStopPrevent" href="https://google.com">https://google.com</a>
+    </div>
+
+    <hr>
+
+    <div id="app-24">
+        <input v-model="text" placeholder="edit me">
+        <p>Message is: {{ text }}</p>
+
+        <hr>
+
+        <span>Multiline message is:</span>
+        <p style="white-space: pre-line;">{{ textarea }}</p>
+        <textarea v-model="textarea" placeholder="add multiple lines"></textarea>
+
+        <hr>
+
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+
+        <hr>
+
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="jhon" value="Jhon" v-model="checkedNames">
+        <label for="jhon">Jhon</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <div>Checked names: {{ checkedNames }}</div>
+
+        <hr>
+
+        <input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <div>Picked: {{ picked }}</div>
+
+        <hr>
+
+        <select v-model="selected">
+            <option value="" disabled>Please select one</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <div>Selected: {{ selected }}</div>
+
+        <hr>
+
+        <select v-model="selectedMultiple" multiple>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <div>Selected: {{ selectedMultiple }}</div>
+
+        <hr>
+
+        <select v-model="selectedValue">
+            <option value="" disabled>Please select one</option>
+            <option v-for="option in options" :value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <div>Selected: {{ selectedValue }}</div>
+
+        <hr>
+
+        <input
+            type="checkbox"
+            v-model="toggle"
+            true-value="yes"
+            false-value="no"
+        >
+        <div>Checked: {{ toggle }}</div>
+
+        <hr>
+
+        <input type="radio" v-model="pick" :value="picked">
+        <div>Value: {{ pick }}</div>
+
+        <hr>
+
+        <select v-model="selectedOption">
+            <option :value="{ number: 123 }">123</option>
+        </select>
+        <div>Value: {{ selectedOption.number }}</div>
+
+        <hr>
+
+        <input v-model="inputed1">
+        <div>Inputed1: {{ inputed1 }}</div>
+        <input v-model.lazy="inputed2">
+        <div>Inputed2: {{ inputed2 }}</div>
+
+        <hr>
+
+        <input type="number" v-model="number1">
+        <div>Number1: {{ typeof number1 }}</div>
+        <input type="number" v-model.number="number2">
+        <div>Number2: {{ typeof number2 }}</div>
+
+        <hr>
+
+        <input type="text" v-model="msg1">
+        <div>Msg1: {{ msg1 }}</div>
+        <input type="text" v-model.trim="msg2">
+        <div>Msg2: {{ msg2 }}</div>
+    </div>
+
+    <hr>
+
+    <div id="app-25">
+        <button-counter></button-counter>
+    </div>
+
+    <hr>
+
+    <div id="app-26">
+        <div :style="{ fontSize: postFontSize + 'em' }">
+            <blog-post
+                v-for="post in posts"
+                :key="post.id"
+                :post="post"
+                @enlarge-text="onEnlargeText"
+            ></blog-post>
+        </div>
+    </div>
+
+    <hr>
+
+    <div id="app-27">
+        <!-- 以下の二つは同じ意味になる -->
+        <input v-model="searchText1">
+        <div>searchText1: {{ searchText1 }}</div>
+        <input
+            :value="searchText2"
+            @input="searchText2 = $event.target.value"
+        >
+        <div>searchText2: {{ searchText2 }}</div>
+
+        <hr>
+
+        <custom-input
+            :value="searchText3"
+            @input="searchText3 = $event"
+        ></custom-input>
+        <div>searchText3: {{ searchText3 }}</div>
+        <custom-input v-model="searchText4"></custom-input>
+        <div>searchText4: {{ searchText4 }}</div>
+    </div>
+
+    <hr>
+
+    <div id="app-28">
+        <alert-box>
+            Somethig bad happened.
+        </alert-box>
+    </div>
+
+    <hr>
+
+    <div id="app-29">
+        <button
+            v-for="tab in tabs"
+            :key="tab"
+            :class="['tab-button', { active: currentTab === tab }]"
+            @click="currentTab = tab"
+        >
+            {{ tab }}
+        </button>
+        <component class="tab" :is="currentTabComponent"></component>
+    </div>
+
+    <hr>
+
+    <div id="app-30">
+        <button
+            v-for="tab in tabs"
+            :key="tab.name"
+            :class="['tab-button', { active: currentTab.name === tab.name }]"
+            @click="currentTab = tab"
+        >
+            {{ tab.name }}
+        </button>
+        <component class="tab" :is="currentTab.component"></component>
+    </div>
+
+    <hr>
+
+    <div id="app-31">
+        <component-a></component-a>
+        <component-b></component-b>
+    </div>
+
+    <hr>
+
+    <div id="app-32">
+        <blog-post title="My journey with Vue"></blog-post>
+        <blog-post :title="post.title"></blog-post>
+        <blog-post :title="post.title + ' by ' + post.author.name"></blog-post>
+
+        <hr>
+
+        <blog-post :likes="42"></blog-post>
+        <blog-post :likes="post.likes"></blog-post>
+
+        <hr>
+
+        <blog-post is-published></blog-post>
+        <blog-post :is-published="false"></blog-post>
+        <blog-post :is-published="post.isPublished"></blog-post>
+
+        <hr>
+
+        <blog-post :comment-ids="[234, 266, 273]"></blog-post>
+        <blog-post :comment-ids="post.commentIds"></blog-post>
+
+        <hr>
+
+        <blog-post :author="{ name: 'Veronica', company: 'Veridian Dynamics'}"></blog-post>
+        <blog-post :author="post.author"></blog-post>
+
+        <hr>
+
+        <!-- 以下は同等 -->
+        <blog-post v-bind="post"></blog-post>
+        <blog-post
+            :title="post.title"
+            :likes="post.likes"
+            :is-published="post.isPublished"
+            :comment-ids="post.commentIds"
+            :author="post.author"
+        ></blog-post>
+    </div>
+
+    <hr>
+
+    <div id="app-33">
+        <bootstrap-date-input
+            data-date-picker="activated"
+            class="date-picker-theme-dark"
+        ></bootstrap-date-input>
+
+        <my-component
+            v-model="username"
+            required
+            placeholder="Enter your username"
+        ></my-component>
+    </div>
+
+    <hr>
+
+    <div id="app-34">
+        <base-checkbox name="basecheckbox" v-model="lovingVue" value="basecheckbox"></base-checkbox>Checkbox
+    </div>
+
+    <hr>
+
+    <div id="app-35">
+        <base-input @focus="onFocus"></base-input>
+    </div>
+
+    <hr>
+
+    <div id="app-36">
+        <!-- 以下二つは同じ動作をする -->
+        <text-document1 v-model="doc1.title"></text-document1>
+        <button @click="changeText1">Change title to 'title'</button>
+
+        <text-document2
+            :title="doc2.title"
+            @update:title="doc2.title = $event"
+        ></text-document2>
+        <button @click="changeText2">Change title to 'title'</button>
+
+        <hr>
+
+        <!-- .syncで簡単に書ける -->
+        <text-document2 :title.sync="doc2.title"></text-document2>
+        <button @click="changeText2">Change title to 'title'</button>
+
+        <hr>
+
+        <!-- v-bind.syncを使うと複数のプロパティを一度に渡せる -->
+        <text-document3 v-bind.sync="doc3"></text-document3>
+        <button @click="changeText3Title">Change title to 'title'</button>
+        <button @click="changeText3Author">Change author to 'author'</button>
+    </div>
+
+    <hr>
+
+    <div id="app-37">
+        <base-layout>
+            <template v-slot:header>
+                <h1>Header</h1>
+            </template>
+            <p>Main Content</p>
+            <p>And anothor one</p>
+            <template v-slot:footer>
+                <p>Footer</p>
+            </template>
+        </base-layout>
+
+        <hr>
+
+        <!-- 省略記法 -->
+        <base-layout>
+            <template #header>
+                <h1>Header</h1>
+            </template>
+            <p>Main Content</p>
+            <p>And anothor one</p>
+            <template #footer>
+                <p>Footer</p>
+            </template>
+        </base-layout>
+    </div>
+
+    <hr>
+
+    <div id="app-38">
+        <!-- 以下全て同等 -->
+        <current-user>
+            <template v-slot:default="slotProps">
+                {{ slotProps.user.firstName }}
+            </template>
+        </current-user>
+        <current-user v-slot:default="slotProps">
+            {{ slotProps.user.firstName }}
+        </current-user>
+        <current-user #default="slotProps">
+            {{ slotProps.user.firstName }}
+        </current-user>
+        <current-user v-slot="slotProps">
+            {{ slotProps.user.firstName }}
+        </current-user>
+        <current-user v-slot="{ user }">
+            {{ user.firstName }}
+        </current-user>
+        <current-user v-slot="{ user: person }">
+            {{ person.firstName }}
+        </current-user>
+
+        <hr>
+
+        <current-user v-slot="{ user = { firstName: 'Guest' } }">
+            {{ user.firstName }}
+        </current-user>
+    </div>
+
+    <hr>
+
+    <div id="app-39">
+        <todo-list :todos="todos">
+            <template #todo="{ todo }">
+                <span v-if="todo.isComplete">✔︎</span>
+                {{ todo.text }}
+            </template>
+        </todo-list>
+    </div>
+
+    <hr>
+
+    <div id="app-40">
+        <button
+            v-for="tab in tabs"
+            :key="tab"
+            :class="['tab-button', { active: currentTab === tab }]"
+            @click="currentTab = tab"
+        >
+            {{ tab }}
+        </button>
+        <keep-alive>
+            <component
+                class="tab"
+                :is="currentTabComponent"
+            ></component>
+        </keep-alive>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
